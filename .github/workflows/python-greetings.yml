@@ -31,6 +31,12 @@ jobs:
         run: npm -v
         working-directory: python-greetings
 
+      - name: where python
+        run: where python
+        shell: cmd
+        working-directory: python-greetings
+
+
       - name: Stop existing dev service (if exists)
         run: pm2 delete greetings-app-dev & EXIT /B 0)
         shell: cmd
@@ -40,6 +46,13 @@ jobs:
         run: pm2 start app.py --name greetings-app-dev --interpreter python -- --port 7001
         shell: cmd
         working-directory: python-greetings
+
+              
+      - name: Check service status
+        run: pm2 logs greetings-app-dev
+        shell: cmd
+        working-directory: python-greetings
+
 
   tests-on-dev:
     needs: deploy-to-dev
@@ -58,14 +71,6 @@ jobs:
         run: npm install
         working-directory: python-greetings-tests
         shell: cmd
-
-              
-      - name: Check service status
-        run: pm2 logs greetings-app-dev
-        shell: cmd
-        working-directory: python-greetings
-
-
 
       - name: Run tests
         run: npm run greetings greetings_dev
