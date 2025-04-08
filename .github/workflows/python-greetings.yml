@@ -38,7 +38,7 @@ jobs:
         working-directory: python-greetings
 
       - name: Start dev service
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev -- --port 7001 --interpreter "C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe"
         shell: cmd
         working-directory: python-greetings
 
