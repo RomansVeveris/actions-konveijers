@@ -22,7 +22,7 @@ runs:
 
     - name: Installing pip dependencies
       run: |
-        npm install
+        npm -v
         npm install -g pm2
         pm2 install pm2-windows-service
         pip install -r requirements.txt
