@@ -24,4 +24,5 @@ runs:
       shell: cmd
       working-directory: tests
       run: |
-        npm run greetings greetings_${{ inputs.env }}
+        .\.venv\Scripts\activate.bat 
+        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}
