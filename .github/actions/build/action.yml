@@ -20,5 +20,5 @@ runs:
     - name: Install pip dependencies
       shell: powershell
       run: |
-        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+        $env:PYTHONIOENCODING="utf-8"
         pip install -r ${{ inputs.path }}/requirements.txt
