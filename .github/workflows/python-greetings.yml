@@ -27,6 +27,12 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
       
+      - name: Install npm
+        run: npm install
+        working-directory: python-greetings
+        
+
+
       - name: Stop existing dev service (if exists)
         run: pm2 delete greetings-app-dev & EXIT /B 0)
         shell: cmd
@@ -35,3 +41,4 @@ jobs:
       - name: Start dev service
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
         shell: cmd
+        working-directory: python-greetings
