@@ -22,9 +22,7 @@ runs:
 
     - name: Installing pip dependencies
       run: |
-        npm -v
-        npm install -g pm2
-        pm2 install pm2-windows-service
+        npm flask --version
         pip install -r requirements.txt
       shell: cmd
       working-directory: python-greetings
