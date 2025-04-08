@@ -35,7 +35,11 @@ jobs:
       - name: Start dev service
         run: |
           pm2 start app.py --name greetings-app-dev -- --port 7001
-          pm2 logs greetings-app-dev
+        shell: cmd
+        working-directory: python-greetings
+
+      - name: Service status
+        run: pm2 logs greetings-app-dev
         shell: cmd
         working-directory: python-greetings
         
