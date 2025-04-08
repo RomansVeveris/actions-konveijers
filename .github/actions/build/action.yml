@@ -21,8 +21,6 @@ runs:
 
 
     - name: Installing pip dependencies
-      run: |
-        npm flask --version
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
       shell: cmd
       working-directory: python-greetings

@@ -27,10 +27,10 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
       
-      - name: Install npm
-        run: npm install
+      - name: Install check
+        run: npm -v
         working-directory: python-greetings
-        
+
 
 
       - name: Stop existing dev service (if exists)
