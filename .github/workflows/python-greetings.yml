@@ -14,3 +14,23 @@ jobs:
         uses: actions/checkout@v4
       - uses: ./.github/actions/build
 
+  deploy-to-dev:
+    needs: install-pip-deps
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Clone python-greetings repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+      
+      - name: Stop existing dev service (if exists)
+        run: pm2 delete greetings-app-dev || true
+        working-directory: python-greetings
+
+
+  
+
