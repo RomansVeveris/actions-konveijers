@@ -29,6 +29,7 @@ jobs:
       
       - name: Stop existing dev service (if exists)
         run: pm2 delete greetings-app-dev & EXIT /B 0)
+        shell: cmd
         working-directory: python-greetings
 
 
