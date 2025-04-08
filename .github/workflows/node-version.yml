@@ -16,7 +16,7 @@ jobs:
       - name: Print greeting
         run: echo "Hello, world!"
   node-version:
-    runs-on: pm2
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - name: Check Node version
