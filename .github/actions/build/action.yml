@@ -22,6 +22,6 @@ runs:
     - name: Installing pip dependencies
       run: |
         pip install --upgrade pip
-        pip install -r ${{ inputs.path }}/requirements.txt
+        pip install -r requirements.txt
       shell: cmd
       working-directory: python-greetings
