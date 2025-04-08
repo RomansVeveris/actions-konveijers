@@ -20,6 +20,12 @@ runs:
         path: python-greetings
 
 
+    - name: Install Flask in Anaconda
+      run: C:\Users\sherb\anaconda3\Scripts\conda.exe install -y flask
+      shell: cmd
+      working-directory: python-greetings
+
+
     - name: Installing pip dependencies
       run: pip install -r requirements.txt
       shell: cmd
