@@ -21,7 +21,7 @@ runs:
 
 
     - name: Install Flask in Anaconda
-      run: C:\Users\sherb\anaconda3\Scripts\conda.exe install -y flask
+      run: C:\Users\sherb\anaconda3\Scripts\conda.exe install -r requirements.txt
       shell: cmd
       working-directory: python-greetings
 
