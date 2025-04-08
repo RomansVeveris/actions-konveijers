@@ -37,7 +37,7 @@ jobs:
           repository: 'mtararujs/python-greetings'
           path: python-greetings
 
-      - uses: ./python-greetings/.github/actions/deploy
+      - uses: ./actions-konveijers/.github/actions/deploy
         with:
           env: 'dev'
           port: 7001
