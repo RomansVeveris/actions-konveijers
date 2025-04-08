@@ -38,10 +38,6 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
-      - name: Service status
-        run: pm2 logs greetings-app-dev
-        shell: cmd
-        working-directory: python-greetings
         
 
 

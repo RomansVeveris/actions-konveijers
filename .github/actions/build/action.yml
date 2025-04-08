@@ -19,14 +19,19 @@ runs:
         repository: mtararujs/python-greetings
         path: python-greetings
 
-    - name: Create virtual environment
-      run: | 
-        python -m venv venv
-        .\venv\Scripts\activate
-      shell: cmd
-      working-directory: python-greetings
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
 
-    - name: Installing all pip dependencies...
-      run: pip install -r requirements.txt
+    - name: Create and activate virtual environment
+      run: |
+        python -m venv venv
+        .\venv\Scripts\activate  # Для Windows (для Linux используем . venv/bin/activate)
+
+    - name: Installing pip dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r ${{ inputs.path }}/requirements.txt
       shell: cmd
       working-directory: python-greetings
