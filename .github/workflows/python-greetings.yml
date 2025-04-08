@@ -38,8 +38,20 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
+      - name: install flask
+        run: pip install flask
+        shell: cmd  
+        working-directory: python-greetings
+
+
       - name: Start dev service
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        shell: cmd
+        working-directory: python-greetings
+
+
+      - name: Stop service
+        run: pm2 stop greetings-app-dev
         shell: cmd
         working-directory: python-greetings
 
