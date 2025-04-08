@@ -3,12 +3,8 @@ name: Python greetings delivery pipeline
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
 
-env:
-  VENV_NAME: greetings-env
-  APP_PORT: 7001
-  FLASK_DEBUG: "0"  # Disable Flask debug mode
+  workflow_dispatch:
 
 jobs:
   install-pip-deps:
@@ -16,21 +12,7 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
-      
-      - name: Clone python-greetings repo
-        uses: actions/checkout@v4
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
-          
-      - name: Create and activate Python virtual environment
-        run: |
-          python -m venv ${{ env.VENV_NAME }}
-          call ${{ env.VENV_NAME }}\Scripts\activate.bat
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-        shell: cmd
-        working-directory: python-greetings
+      - uses: ./.github/actions/build
 
   deploy-to-dev:
     needs: install-pip-deps
@@ -45,28 +27,39 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
       
-      - name: Verify Python virtual environment
-        run: |
-          call ${{ env.VENV_NAME }}\Scripts\activate.bat
-          python --version
-          python -m pip show flask
+      - name: where python
+        run: where python
         shell: cmd
         working-directory: python-greetings
+
+      - name: show Flask
+        run: C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe -m pip show flask
+        shell: cmd
+        working-directory: python-greetings
+
 
       - name: Stop existing dev service (if exists)
-        run: pm2 delete greetings-app-dev & EXIT /B 0
+        run: pm2 delete greetings-app-dev & EXIT /B 0)
         shell: cmd
         working-directory: python-greetings
 
-      - name: Start dev service with virtual environment Python
-        run: pm2 start app.py --name greetings-app-dev --interpreter "${{ github.workspace }}\python-greetings\${{ env.VENV_NAME }}\Scripts\python.exe" -- --port ${{ env.APP_PORT }}
+      - name: Start dev service with system Python
+        run: pm2 start app.py --name greetings-app-dev --interpreter C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe -- --port 5000
         shell: cmd
         working-directory: python-greetings
+
               
+      - name: Install check
+        run: npm -v
+        working-directory: python-greetings
+
+
+
       - name: Check service status
-        run: pm2 logs greetings-app-dev --lines 20 --nostream
+        run: pm2 logs greetings-app-dev
         shell: cmd
         working-directory: python-greetings
+
 
   tests-on-dev:
     needs: deploy-to-dev
@@ -90,3 +83,8 @@ jobs:
         run: npm run greetings greetings_dev
         working-directory: python-greetings-tests
         shell: cmd
+        
+
+
+
+

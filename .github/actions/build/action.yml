@@ -1,15 +1,11 @@
 name: 'Install Python dependencies'
-description: 'Install dependencies using pip in a virtual environment'
+description: 'Install dependencies using pip'
 
 inputs:
   path:
     description: 'Path to the directory containing requirements.txt'
     required: true
     default: python-greetings
-  venv_name:
-    description: 'Name of the virtual environment'
-    required: false
-    default: 'venv'
 
 runs:
   using: composite
@@ -17,29 +13,18 @@ runs:
     - name: Checkout pipeline repo
       uses: actions/checkout@v4
 
-    - name: path find
-      run: echo $PATH
-      shell: cmd
-
     - name: Clone python-greetings repo
       uses: actions/checkout@v4
       with:
         repository: mtararujs/python-greetings
-        path: ${{ inputs.path }}
-
-    - name: Create and activate Python virtual environment
-      run: |
-        python -m venv ${{ inputs.path }}\${{ inputs.venv_name }}
-        call ${{ inputs.path }}\${{ inputs.venv_name }}\Scripts\activate.bat
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt
+        path: python-greetings
+    - name: finding path
+      run: echo %PATH%
       shell: cmd
-      working-directory: ${{ inputs.path }}
+      working-directory: python-greetings
 
-    # You can add this step if you want to verify the installation
-    - name: Verify virtual environment setup
-      run: |
-        call ${{ inputs.path }}\${{ inputs.venv_name }}\Scripts\activate.bat
-        python -m pip list
+
+    - name: Installing pip dependencies
+      run: pip install -r requirements.txt
       shell: cmd
-      working-directory: ${{ inputs.path }}
+      working-directory: python-greetings
