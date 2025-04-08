@@ -54,7 +54,7 @@ jobs:
 
               
       - name: Check service status
-        run: pm2 logs greetings-app-dev
+        run: pm2 show greetings-app-dev
         shell: cmd
         working-directory: python-greetings
 
