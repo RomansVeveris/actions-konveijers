@@ -33,7 +33,7 @@ jobs:
         working-directory: python-greetings
 
       - name: Flask install
-        run: pip install Flask
+        run: pip install flask
         shell: cmd
         working-directory: python-greetings
 
@@ -46,9 +46,3 @@ jobs:
         run: pm2 logs greetings-app-dev
         shell: cmd
         working-directory: python-greetings
-
-        
-
-
-  
-
