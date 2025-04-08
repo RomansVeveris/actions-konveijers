@@ -28,4 +28,4 @@ runs:
       working-directory: python-greetings
       run: |
         .\.venv\Scripts\activate.bat 
-        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}
+        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }} --host 0.0.0.0
