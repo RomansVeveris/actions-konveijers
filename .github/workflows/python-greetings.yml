@@ -37,5 +37,15 @@ jobs:
       
       - name: Stop existing service (if any)
         run: | 
-          pm2 start app.py --name greetings-app-dev --port 7001
+          pm2 delete greetings-app-dev || true
+        working-directory: python-greetings
+
+      - name: Set variable for project.
+        run: |
+          echo "PORT=7001"" >> &GITHUB_ENV"
+        working-directory: python-greetings
+
+      - name: Start the service
+        run: | 
+          pm2 start app.py --name greetings-app-dev --interpreter python --watch
         working-directory: python-greetings
