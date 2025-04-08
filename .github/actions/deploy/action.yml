@@ -22,7 +22,7 @@ runs:
       run: pm2 delete greetings-app-dev & EXIT /B 0)
 
 
-    - uses: actions/checkout@v4
+
     - name: Deploy the app to ${{ inputs.env }}
       shell: cmd
       working-directory: python-greetings
