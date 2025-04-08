@@ -14,11 +14,17 @@ runs:
     - name: Log message
       shell: cmd
       run: echo "Deploying the app to ${{ inputs.env }} environment..."
-      
+
+
+    - name: Delete if exists
+      shell: cmd
+      working-directory: python-greetings
+      run: pm2 delete greetings-app-dev & EXIT /B 0)
+
+
     - name: Deploy the app to ${{ inputs.env }}
       shell: cmd
       working-directory: python-greetings
       run: |
-        .\.venv\Scripts\activate.bat  # Активация виртуальной среды в CMD
-        pm2 delete greetings-app-dev & EXIT /B 0)
-        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}  # Запуск нового приложения
+        .\.venv\Scripts\activate.bat 
+        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}
