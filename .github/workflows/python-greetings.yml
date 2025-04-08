@@ -1,74 +1,96 @@
-name: Python greetings delivery pipeline
+name: Python greetings
 
 on:
   push:
     branches: [ "main" ]
-
   workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   install-pip-deps:
     runs-on: self-hosted
-    steps:
-      - name: Checkout pipeline repo
-        uses: actions/checkout@v4
-      - uses: ./.github/actions/build
-
+    steps: 
+      - name: Log message
+        run: echo "Installing all pip dependencies..."
+      - uses: actions/checkout@v4
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'app'
+      - name: Install deps step
+        working-directory: app
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\activate
+          pip install -r requirements.txt
   deploy-to-dev:
-    needs: install-pip-deps
     runs-on: self-hosted
+    needs : [ install-pip-deps ]
     steps:
-      - name: Checkout Pipeline repo
-        uses: actions/checkout@v4
-
-      - name: Clone python-greetings repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
-
-      - name: Stop existing dev service (if exists)
-        run: pm2 delete greetings-app-dev & EXIT /B 0)
-        shell: cmd
-        working-directory: python-greetings
-
-      - name: Start dev service with system Python
-        run: pm2 start app.py --name greetings-app-dev --interpreter C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe -- --port 5000
-        shell: cmd
-        working-directory: python-greetings
-
-              
-      - name: Install check
-        run: npm -v
-        working-directory: python-greetings
-
-
-
-
+          repository: 'mdaugavietis/python-app'
+          sparse-checkout: .github/actions
+          sparse-checkout-cone-mode: false
+          path: python-app
+      - uses: ./python-app/.github/actions/deploy
+        with:
+          env: 'dev'
+          port: 7001
   tests-on-dev:
-    needs: deploy-to-dev
     runs-on: self-hosted
+    needs : [ deploy-to-dev ]
     steps:
-      - name: Checkout pipeline repo 
-        uses: actions/checkout@v4
-
-      - name: Checkout test framework repo
-        uses: actions/checkout@v4
+      - uses: ./python-app/.github/actions/test
         with:
-          repository: mtararujs/course-js-api-framework
-          path: python-greetings-tests
-      
-      - name: Npm installation
-        run: npm install
-        working-directory: python-greetings-tests
-        shell: cmd
+          env: 'dev'
 
-      - name: Run tests
-        run: npm run greetings greetings_dev
-        working-directory: python-greetings-tests
-        shell: cmd
-        
+  deploy-to-stg:
+    runs-on: self-hosted
+    needs : [ tests-on-dev ]
+    steps:
+      - uses: ./python-app/.github/actions/deploy
+        with:
+          env: 'stg'
+          port: 7002
+  tests-on-stg:
+    runs-on: self-hosted
+    needs : [ deploy-to-stg ]
+    steps:
+      - uses: ./python-app/.github/actions/test
+        with:
+          env: 'stg'
 
+  deploy-to-preprod:
+    runs-on: self-hosted
+    needs : [ tests-on-stg ]
+    steps:
+      - uses: ./python-app/.github/actions/deploy
+        with:
+          env: 'preprod'
+          port: 7003
+  tests-on-preprod:
+    runs-on: self-hosted
+    needs : [ deploy-to-preprod ]
+    steps:
+      - uses: ./python-app/.github/actions/test
+        with:
+          env: 'preprod'
 
-
-
+  deploy-to-prod:
+    runs-on: self-hosted
+    needs : [ tests-on-preprod ]
+    steps:
+      - uses: ./python-app/.github/actions/deploy
+        with:
+          env: 'prod'
+          port: 7004
+  tests-on-prod:
+    runs-on: self-hosted
+    needs : [ deploy-to-prod ]
+    steps:
+      - uses: ./python-app/.github/actions/test
+        with:
+          env: 'prod'

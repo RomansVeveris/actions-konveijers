@@ -1,30 +1,86 @@
-name: 'Install Python dependencies'
-description: 'Install dependencies using pip'
+name: Python greetings
 
-inputs:
-  path:
-    description: 'Path to the directory containing requirements.txt'
-    required: true
-    default: python-greetings
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
-runs:
-  using: composite
-  steps:
-    - name: Checkout pipeline repo
-      uses: actions/checkout@v4
+defaults:
+  run:
+    shell: bash
 
-    - name: Clone python-greetings repo
-      uses: actions/checkout@v4
-      with:
-        repository: mtararujs/python-greetings
-        path: python-greetings
-    - name: finding path
-      run: echo %PATH%
-      shell: cmd
-      working-directory: python-greetings
-
-
-    - name: Installing pip dependencies
-      run: pip install -r requirements.txt
-      shell: cmd
-      working-directory: python-greetings
+jobs:
+  install-pip-deps:
+    runs-on: self-hosted
+    steps: 
+      - name: Log message
+        run: echo "Installing all pip dependencies..."
+      - uses: actions/checkout@v4
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'app'
+      - name: Install deps step
+        working-directory: app
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\activate
+          pip install -r requirements.txt
+  deploy-to-dev:
+    runs-on: self-hosted
+    needs : [ install-pip-deps ]
+    steps:
+      - name: Log message
+        run: |
+          dir
+          dir app
+      # - uses: actions/checkout@v4
+      #   with:
+      #     repository: 'mtararujs/python-greetings'
+      #     path: 'app'
+      # - name: Deploy the app
+      #   run: |
+      #     .\..\venv\Scripts\activate
+      #     cd app
+      #     python app.py
+  tests-on-dev:
+    runs-on: self-hosted
+    needs : [ deploy-to-dev ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  deploy-to-staging:
+    runs-on: self-hosted
+    needs : [ tests-on-dev ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  tests-on-staging:
+    runs-on: self-hosted
+    needs : [ deploy-to-staging ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  deploy-to-preprod:
+    runs-on: self-hosted
+    needs : [ tests-on-staging ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  tests-on-preprod:
+    runs-on: self-hosted
+    needs : [ deploy-to-preprod ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  deploy-to-prod:
+    runs-on: self-hosted
+    needs : [ tests-on-preprod ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
+  tests-on-prod:
+    runs-on: self-hosted
+    needs : [ deploy-to-prod ]
+    steps:
+      - name: Log message
+        run: echo "Placeholder"
