@@ -41,8 +41,14 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
+        
+      - name: Check service status
+        run: pm2 show greetings-app-dev
+        shell: cmd
+        working-directory: python-greetings
+
   tests-on-dev:
-    needs: deploy-to-dev
+    needs: daa
     runs-on: self-hosted
     steps:
       - name: Checkout pipeline repo 
@@ -59,10 +65,6 @@ jobs:
         working-directory: python-greetings-tests
         shell: cmd
 
-      - name: Check service status
-        run: pm2 show greetings-app-dev
-        shell: cmd
-        working-directory: python-greetings
       
       - name: Run tests
         run: npm run greetings greetings_dev
