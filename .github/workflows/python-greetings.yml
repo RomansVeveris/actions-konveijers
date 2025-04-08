@@ -49,13 +49,3 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
-
-      - name: Stop service
-        run: pm2 stop greetings-app-dev
-        shell: cmd
-        working-directory: python-greetings
-
-      - name: Check status
-        run: pm2 logs greetings-app-dev --lines 100
-        shell: cmd 
-        working-directory: python-greetings
