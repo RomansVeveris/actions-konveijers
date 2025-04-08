@@ -24,5 +24,5 @@ runs:
       shell: cmd
       working-directory: tests
       run: |
-        .\.venv\Scripts\activate.bat 
+        .\.venv\Scripts\activate.bat
         pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}
