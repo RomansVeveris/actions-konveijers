@@ -10,6 +10,8 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Checkout pipeline repo
+      uses: actions/checkout@v4
 
     - name: Clone python-greetings repo
       uses: actions/checkout@v4
@@ -17,6 +19,6 @@ runs:
         repository: mtararujs/python-greetings
         path: python-greetings
 
-    - name: Install pip dependencies
-      shell: powershell
+    - name: Installing all pip dependencies...
+      working-directory: python-greetings
       run: pip install -r requirements.txt
