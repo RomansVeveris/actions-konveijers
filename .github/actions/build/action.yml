@@ -22,7 +22,9 @@ runs:
 
     - name: Installing pip dependencies
       run: |
-        pip install --upgrade pip
+        npm install
+        npm install -g pm2
+        pm2 install pm2-windows-service
         pip install -r requirements.txt
       shell: cmd
       working-directory: python-greetings
