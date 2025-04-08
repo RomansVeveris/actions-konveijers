@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    shell: cmd  # Указываем, что нужно использовать командную строку Windows
+    shell: cmd
 
 jobs:
   install-pip-deps:
@@ -19,6 +19,8 @@ jobs:
         with:
           repository: mtararujs/python-greetings
           path: python-greetings
+
+
       - name: Install deps step
         working-directory: python-greetings
         run: |
@@ -32,10 +34,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'RomansVeveris/actions-konveijers'
-          sparse-checkout: .github/actions
-          sparse-checkout-cone-mode: false
+          repository: 'mtararujs/python-greetings'
           path: python-greetings
+
       - uses: ./python-greetings/.github/actions/deploy
         with:
           env: 'dev'
