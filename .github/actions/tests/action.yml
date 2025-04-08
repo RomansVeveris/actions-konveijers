@@ -1,5 +1,5 @@
-name: "Test Python App"
-description: "Composite action to deploy our Python Flask App using pm2"
+name: "Test results"
+description: "greetings_env test"
 inputs: 
   env:
     description: "Environment where to deploy Python Flask App"
