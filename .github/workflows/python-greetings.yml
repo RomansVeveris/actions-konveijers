@@ -48,7 +48,7 @@ jobs:
     needs: deploy-to-dev
     steps:
 
-      - uses: actions/checkoutsv4
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/tests
         with:
           env: 'dev'
