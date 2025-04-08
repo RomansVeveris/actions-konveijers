@@ -45,7 +45,7 @@ jobs:
 
 
       - name: Start dev service
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev --interpreter C:\Users\sherb\anaconda3\python.exe -- --port 7001
         shell: cmd
         working-directory: python-greetings
 
@@ -57,5 +57,5 @@ jobs:
 
       - name: Check status
         run: pm2 logs greetings-app-dev --lines 100
-        shell: cmd
+        shell: cmd 
         working-directory: python-greetings
