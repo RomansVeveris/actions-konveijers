@@ -30,7 +30,7 @@ jobs:
 
   deploy-to-dev:
     runs-on: self-hosted
-    needs: [ install-pip-deps ]
+    needs: install-pip-deps
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,3 +53,77 @@ jobs:
         with:
           env: 'dev'
 
+  deploy-to-stg:
+    runs-on: self-hosted
+    needs: install-pip-deps
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: python-greetings
+         
+      - uses: ./.github/actions/deploy
+        with:
+          env: 'stg'
+          port: 7002
+
+
+  tests-on-stg:
+    runs-on: self-hosted
+    needs: deploy-to-dev
+    steps:
+
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/tests
+        with:
+          env: 'stg'
+
+
+  deploy-to-preprod:
+    runs-on: self-hosted
+    needs: install-pip-deps
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: python-greetings
+         
+      - uses: ./.github/actions/deploy
+        with:
+          env: 'preprod'
+          port: 7003
+
+
+  tests-on-preprod:
+    runs-on: self-hosted
+    needs: deploy-to-dev
+    steps:
+
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/tests
+        with:
+          env: 'preprod'
+
+  deploy-to-prod:
+    runs-on: self-hosted
+    needs: install-pip-deps
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: python-greetings
+         
+      - uses: ./.github/actions/deploy
+        with:
+          env: 'prod'
+          port: 7004
+
+  tests-on-prod:
+    runs-on: self-hosted
+    needs: deploy-to-dev
+    steps:
+
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/tests
+        with:
+          env: 'preprod'
