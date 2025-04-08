@@ -28,14 +28,7 @@ jobs:
           path: python-greetings
       
       - name: Stop existing dev service (if exists)
-        run: |
-          echo "Stopping existing dev service..."
-          try {
-            pm2 delete greetings-app-dev
-          }
-          catch {
-            echo "No existing dev service to stop."
-          }
+        run: pm2 delete greetings-app-dev & set "errorlevel=0"
         working-directory: python-greetings
 
 
