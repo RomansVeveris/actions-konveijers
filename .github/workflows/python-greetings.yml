@@ -37,6 +37,7 @@ jobs:
           repository: 'mtararujs/python-greetings'
           path: python-greetings
 
+      - uses: actions/checkout@v4   
       - uses: ./.github/actions/deploy
         with:
           env: 'dev'
