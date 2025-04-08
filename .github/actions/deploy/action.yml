@@ -14,10 +14,11 @@ runs:
     - name: Log message
       shell: cmd
       run: echo "Deploying the app to ${{ inputs.env }} environment..."
+      
     - name: Deploy the app to ${{ inputs.env }}
       shell: cmd
       working-directory: python-greetings
       run: |
-        source .venv/bin/activate
-        RUNNER_TRACKING_ID="" && pm2 delete greetings-app-${{ inputs.env }} || true
-        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }} 
+        .\.venv\Scripts\activate.bat  # Активация виртуальной среды в CMD
+        pm2 delete greetings-app-${{ inputs.env }} || echo "No existing app found"  # Удаление старого приложения, если оно есть
+        pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}  # Запуск нового приложения
