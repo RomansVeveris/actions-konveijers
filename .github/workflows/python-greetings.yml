@@ -55,7 +55,7 @@ jobs:
 
   deploy-to-stg:
     runs-on: self-hosted
-    needs: install-pip-deps
+    needs: tests-on-dev
     steps:
       - uses: actions/checkout@v4
         with:
@@ -70,7 +70,7 @@ jobs:
 
   tests-on-stg:
     runs-on: self-hosted
-    needs: deploy-to-dev
+    needs: deploy-to-stg
     steps:
 
       - uses: actions/checkout@v4
@@ -81,7 +81,7 @@ jobs:
 
   deploy-to-preprod:
     runs-on: self-hosted
-    needs: install-pip-deps
+    needs: tests-on-stg
     steps:
       - uses: actions/checkout@v4
         with:
@@ -96,7 +96,7 @@ jobs:
 
   tests-on-preprod:
     runs-on: self-hosted
-    needs: deploy-to-dev
+    needs: deploy-to-preprod
     steps:
 
       - uses: actions/checkout@v4
@@ -106,7 +106,7 @@ jobs:
 
   deploy-to-prod:
     runs-on: self-hosted
-    needs: install-pip-deps
+    needs: tests-on-preprod
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,7 +120,7 @@ jobs:
 
   tests-on-prod:
     runs-on: self-hosted
-    needs: deploy-to-dev
+    needs: deploy-to-prod
     steps:
 
       - uses: actions/checkout@v4

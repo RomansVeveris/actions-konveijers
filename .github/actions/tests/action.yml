@@ -19,10 +19,4 @@ runs:
       working-directory: tests
       run: |
         npm install
-
-    - name: Run test on ${{ inputs.env }}
-      shell: cmd
-      working-directory: tests
-      run: |
-        .\.venv\Scripts\activate.bat 
         npm run greetings greetings_${{ inputs.env }}
