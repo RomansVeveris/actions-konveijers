@@ -27,9 +27,7 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
       
-      - name: Install check
-        run: npm -v
-        working-directory: python-greetings
+
 
       - name: where python
         run: where python
@@ -53,6 +51,10 @@ jobs:
         working-directory: python-greetings
 
               
+      - name: Install check
+        run: npm -v
+        working-directory: python-greetings
+
       - name: Check service status
         run: pm2 show greetings-app-dev
         shell: cmd
