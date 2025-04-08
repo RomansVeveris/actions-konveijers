@@ -1,0 +1,23 @@
+name: 'Install Python dependencies'
+description: 'Install dependencies using pip'
+
+inputs:
+  path:
+    description: 'Path to the directory containing requirements.txt'
+    required: true
+    default: 'python-greetings'
+
+runs:
+  using: composite
+  steps:
+
+    - name: Clone python-greetings repo
+      uses: actions/checkout@v4
+      with:
+        repository: mtararujs/python-greetings
+        path: python-greetings
+
+    - name: Install pip dependencies
+      shell: powershell
+      run: |
+        pip install -r ${{ inputs.path }}/requirements.txt
