@@ -32,12 +32,10 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
-
       - name: Start dev service
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
         shell: cmd
         working-directory: python-greetings
-
 
         
 
