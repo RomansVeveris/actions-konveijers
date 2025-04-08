@@ -20,5 +20,5 @@ runs:
       working-directory: python-greetings
       run: |
         .\.venv\Scripts\activate.bat  # Активация виртуальной среды в CMD
-        pm2 delete greetings-app-${{ inputs.env }} || echo "No existing app found"  # Удаление старого приложения, если оно есть
+        pm2 delete greetings-app-dev & EXIT /B 0)
         pm2 start app.py --name greetings-app-${{ inputs.env }} -- --port ${{ inputs.port }}  # Запуск нового приложения
