@@ -19,6 +19,13 @@ runs:
         repository: mtararujs/python-greetings
         path: python-greetings
 
+    - name: Create virtual environment
+      run: | 
+        python -m venv venv
+        .\venv\Scripts\activate
+      shell: cmd
+      working-directory: python-greetings
+
     - name: Installing all pip dependencies...
       run: pip install -r requirements.txt
       shell: cmd
