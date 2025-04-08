@@ -36,7 +36,6 @@ jobs:
           catch {
             echo "No existing dev service to stop."
           }
-        shell: cmd
         working-directory: python-greetings
 
 
