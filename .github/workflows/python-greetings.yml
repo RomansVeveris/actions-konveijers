@@ -26,17 +26,6 @@ jobs:
         with:
           repository: mtararujs/python-greetings
           path: python-greetings
-      
-      - name: where python
-        run: where python
-        shell: cmd
-        working-directory: python-greetings
-
-      - name: show Flask
-        run: C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe -m pip show flask
-        shell: cmd
-        working-directory: python-greetings
-
 
       - name: Stop existing dev service (if exists)
         run: pm2 delete greetings-app-dev & EXIT /B 0)
@@ -53,10 +42,8 @@ jobs:
         run: npm -v
         working-directory: python-greetings
 
-
-
       - name: Check service status
-        run: pm2 logs greetings-app-dev
+        run: pm2 show greetings-app-dev
         shell: cmd
         working-directory: python-greetings
 
