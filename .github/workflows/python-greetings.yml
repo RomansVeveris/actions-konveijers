@@ -18,9 +18,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: 'mtararujs/python-greetings'
-          path: 'app'
+          path: 'python-greetings'
       - name: Install deps step
-        working-directory: app
+        working-directory: python-greetings
         run: |
           python -m venv .venv
           .\.venv\Scripts\activate
@@ -47,50 +47,3 @@ jobs:
         with:
           env: 'dev'
 
-  deploy-to-stg:
-    runs-on: self-hosted
-    needs : [ tests-on-dev ]
-    steps:
-      - uses: ./python-app/.github/actions/deploy
-        with:
-          env: 'stg'
-          port: 7002
-  tests-on-stg:
-    runs-on: self-hosted
-    needs : [ deploy-to-stg ]
-    steps:
-      - uses: ./python-app/.github/actions/test
-        with:
-          env: 'stg'
-
-  deploy-to-preprod:
-    runs-on: self-hosted
-    needs : [ tests-on-stg ]
-    steps:
-      - uses: ./python-app/.github/actions/deploy
-        with:
-          env: 'preprod'
-          port: 7003
-  tests-on-preprod:
-    runs-on: self-hosted
-    needs : [ deploy-to-preprod ]
-    steps:
-      - uses: ./python-app/.github/actions/test
-        with:
-          env: 'preprod'
-
-  deploy-to-prod:
-    runs-on: self-hosted
-    needs : [ tests-on-preprod ]
-    steps:
-      - uses: ./python-app/.github/actions/deploy
-        with:
-          env: 'prod'
-          port: 7004
-  tests-on-prod:
-    runs-on: self-hosted
-    needs : [ deploy-to-prod ]
-    steps:
-      - uses: ./python-app/.github/actions/test
-        with:
-          env: 'prod'
