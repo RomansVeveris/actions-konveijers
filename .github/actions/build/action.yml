@@ -22,3 +22,4 @@ runs:
     - name: Installing all pip dependencies...
       working-directory: python-greetings
       run: pip install -r requirements.txt
+      shell: cmd
