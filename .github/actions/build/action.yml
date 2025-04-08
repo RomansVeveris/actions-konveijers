@@ -19,7 +19,10 @@ runs:
         repository: mtararujs/python-greetings
         path: python-greetings
 
+
     - name: Installing pip dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
       shell: cmd
       working-directory: python-greetings
