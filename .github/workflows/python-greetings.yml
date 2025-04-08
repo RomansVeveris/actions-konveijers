@@ -49,3 +49,30 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
+  tests-on-dev:
+    needs: deploy-to-dev
+    runs-on: self-hosted
+    steps:
+      - name: Checkout pipeline repo 
+        uses: actions/checkout@v4
+
+      - name: Checkout test framework repo
+        uses: actions/checkout@v4
+        with:
+          repository: https://github.com/mtararujs/course-js-api-framework
+          path: python-greetings-tests
+      
+      - name: Npm installation
+        run: npm install
+        working-directory: python-greetings-tests
+        shell: cmd
+
+      - name: Run tests
+        run: npm run greetings greetings_dev
+        working-directory: python-greetings-tests
+        shell: cmd
+        
+
+
+
+
