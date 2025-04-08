@@ -32,19 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'mdaugavietis/python-app'
+          repository: 'RomansVeveris/actions-konveijers'
           sparse-checkout: .github/actions
           sparse-checkout-cone-mode: false
-          path: python-app
-      - uses: ./python-app/.github/actions/deploy
+          path: python-greetings
+      - uses: ./python-greetings/.github/actions/deploy
         with:
           env: 'dev'
           port: 7001
 
-  tests-on-dev:
-    runs-on: self-hosted
-    needs: [ deploy-to-dev ]
-    steps:
-      - uses: ./python-app/.github/actions/test
-        with:
-          env: 'dev'
