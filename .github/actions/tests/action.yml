@@ -20,7 +20,7 @@ runs:
       run: |
         npm install
 
-    - name: Run tests on ${{ inputs.env }}
+    - name: Run test on ${{ inputs.env }}
       shell: cmd
       working-directory: tests
       run: |
