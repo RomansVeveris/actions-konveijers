@@ -53,11 +53,10 @@ jobs:
         run: npm -v
         working-directory: python-greetings
 
-      - name: Wait for Flask to be ready
-        run: npx wait-on http://localhost:7001
+
 
       - name: Check service status
-        run: pm2 show greetings-app-dev
+        run: pm2 logs greetings-app-dev
         shell: cmd
         working-directory: python-greetings
 
