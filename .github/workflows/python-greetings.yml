@@ -59,7 +59,7 @@ jobs:
       - name: Checkout test framework repo
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/mtararujs/course-js-api-framework
+          repository: /mtararujs/course-js-api-framework
           path: python-greetings-tests
       
       - name: Npm installation
