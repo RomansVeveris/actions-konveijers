@@ -36,11 +36,10 @@ jobs:
         shell: cmd
         working-directory: python-greetings
 
-      - name: Start dev service
-        run: pm2 start app.py --name greetings-app-dev --interpreter C:\Users\sherb\anaconda3\python.exe -- --port 7001
+      - name: Start dev service with system Python
+        run: pm2 start app.py --name greetings-app-dev --interpreter python -- --port 7001
         shell: cmd
         working-directory: python-greetings
-
 
   tests-on-dev:
     needs: deploy-to-dev
