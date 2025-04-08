@@ -1,11 +1,15 @@
 name: 'Install Python dependencies'
-description: 'Install dependencies using pip'
+description: 'Install dependencies using pip in a virtual environment'
 
 inputs:
   path:
     description: 'Path to the directory containing requirements.txt'
     required: true
     default: python-greetings
+  venv_name:
+    description: 'Name of the virtual environment'
+    required: false
+    default: 'venv'
 
 runs:
   using: composite
@@ -17,16 +21,21 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: mtararujs/python-greetings
-        path: python-greetings
+        path: ${{ inputs.path }}
 
-
-    - name: Install Flask in Anaconda
-      run: C:\Users\sherb\anaconda3\python.exe -m pip install -r requirements.txt
+    - name: Create and activate Python virtual environment
+      run: |
+        python -m venv ${{ inputs.path }}\${{ inputs.venv_name }}
+        call ${{ inputs.path }}\${{ inputs.venv_name }}\Scripts\activate.bat
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
       shell: cmd
-      working-directory: python-greetings
+      working-directory: ${{ inputs.path }}
 
-
-    - name: Installing pip dependencies
-      run: C:\Users\sherb\AppData\Local\Programs\Python\Python313\python.exe -m pip install -r requirements.txt
+    # You can add this step if you want to verify the installation
+    - name: Verify virtual environment setup
+      run: |
+        call ${{ inputs.path }}\${{ inputs.venv_name }}\Scripts\activate.bat
+        python -m pip list
       shell: cmd
-      working-directory: python-greetings
+      working-directory: ${{ inputs.path }}
