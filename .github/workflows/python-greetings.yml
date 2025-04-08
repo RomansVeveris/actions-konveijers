@@ -7,14 +7,14 @@ on:
 
 defaults:
   run:
-    shell: cmd  # Используем PowerShell, который доступен в Windows
+    shell: cmd  # Указываем, что нужно использовать командную строку Windows
 
 jobs:
   install-pip-deps:
     runs-on: self-hosted
     steps: 
       - name: Log message
-        run: Write-Host "Installing all pip dependencies..."
+        run: echo Installing all pip dependencies...
       - uses: actions/checkout@v4
         with:
           repository: mtararujs/python-greetings
@@ -23,7 +23,7 @@ jobs:
         working-directory: python-greetings
         run: |
           python -m venv .venv
-          .\.venv\Scripts\Activate.ps1  # Используем PowerShell-активацию для виртуальной среды
+          .\.venv\Scripts\activate.bat  # Активация виртуальной среды в CMD
           pip install -r requirements.txt
 
   deploy-to-dev:
